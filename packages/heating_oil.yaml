@@ -1,0 +1,117 @@
+input_text:
+  heating_oil_price_url:
+    name: Oil price page URL
+    min: 8
+    max: 255
+    initial: https://homefuelsdirect.co.uk/home/heating-oil-prices/london
+    icon: mdi:web
+    mode: text
+  heating_oil_price_selector:
+    name: Oil price CSS selector
+    min: 1
+    max: 255
+    initial: "#currentLivePrice"
+    icon: mdi:code-tags
+    mode: text
+
+input_boolean:
+  heating_oil_price_is_pence:
+    name: Oil price is pence
+    icon: mdi:currency-gbp
+    initial: true
+
+input_number:
+  heating_oil_order_litres:
+    name: Oil order litres
+    min: 1
+    max: 5000
+    step: 1
+    mode: box
+    unit_of_measurement: L
+    initial: 500
+    icon: mdi:barrel
+
+template:
+  - sensor:
+      - name: Heating oil order cost
+        unique_id: heating_oil_order_cost
+        device_class: monetary
+        state_class: measurement
+        unit_of_measurement: GBP
+        icon: mdi:cash
+        availability: >-
+          {{ states('sensor.heating_oil_price_per_litre') | float(none) is number }}
+        state: >-
+          {{ (
+            states('sensor.heating_oil_price_per_litre') | float(0)
+            * states('input_number.heating_oil_order_litres') | float(0)
+          ) | round(2) }}
+
+rest:
+  - resource_template: >-
+      {% set u = states('input_text.heating_oil_price_url') | trim %}
+      {{ u if u.startswith('https://') or u.startswith('http://') else
+         'https://homefuelsdirect.co.uk/home/heating-oil-prices/london' }}
+    scan_interval: 86400
+    timeout: 30
+    headers:
+      User-Agent: Mozilla/5.0 (compatible; Home Assistant)
+    sensor:
+      - name: Heating oil price per litre
+        unique_id: heating_oil_price_per_litre
+        device_class: monetary
+        state_class: measurement
+        unit_of_measurement: GBP/L
+        icon: mdi:currency-gbp
+        availability: >-
+          {{ value is string and value | length > 0 }}
+        value_template: >-
+          {% set ns = namespace(raw=none) %}
+          {% set sel = states('input_text.heating_oil_price_selector') | trim %}
+          {% if sel.startswith('#') %}
+            {% set found = value | regex_findall(
+              'id=["\']' ~ sel[1:] ~ '["\'][^>]*>\s*([0-9]+(?:[.,][0-9]+)?)',
+              ignorecase=true) %}
+            {% if found %}{% set ns.raw = found[0] %}{% endif %}
+          {% elif '.' in sel %}
+            {% set cls = sel.split('.')[-1] %}
+            {% set found = value | regex_findall(
+              'class=["\'][^"\']*' ~ cls ~ '[^"\']*["\'][^>]*>\s*([0-9]+(?:[.,][0-9]+)?)',
+              ignorecase=true) %}
+            {% if found %}{% set ns.raw = found[0] %}{% endif %}
+          {% endif %}
+          {% if ns.raw is none %}
+            {% set found = value | regex_findall(
+              '([0-9]+(?:[.,][0-9]+)?)\s*pence',
+              ignorecase=true) %}
+            {% if found %}{% set ns.raw = found[0] %}{% endif %}
+          {% endif %}
+          {% if ns.raw is none %}
+            unknown
+          {% else %}
+            {% set n = ns.raw | replace(',', '.') | float(0) %}
+            {% if is_state('input_boolean.heating_oil_price_is_pence', 'on') %}
+              {{ (n / 100) | round(4) }}
+            {% else %}
+              {{ n | round(4) }}
+            {% endif %}
+          {% endif %}
+
+automation:
+  - id: heating_oil_price_refresh
+    alias: Heating oil price refresh
+    description: Re-fetch the oil price when the scrape URL, selector, or pence toggle changes.
+    trigger:
+      - trigger: state
+        entity_id:
+          - input_text.heating_oil_price_url
+          - input_text.heating_oil_price_selector
+          - input_boolean.heating_oil_price_is_pence
+    condition:
+      - condition: template
+        value_template: "{{ trigger.from_state is not none }}"
+    action:
+      - action: homeassistant.update_entity
+        target:
+          entity_id: sensor.heating_oil_price_per_litre
+    mode: single
