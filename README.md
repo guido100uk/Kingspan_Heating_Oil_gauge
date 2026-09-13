@@ -13,12 +13,12 @@ Presence simulator lives in a separate repo: [presence_simulator](https://github
 3. Settings → Devices & services → **Add integration** → **Kingspan Watchman SENSiT**.
 4. Type the same username and password as the Kingspan / Connect Sensor app. Leave **name** as `My Tank` unless you want a different device name.
 
-After setup, Developer tools → States should show sensors prefixed with the tank/device name. On this house the device is **Scrumpy Way**:
+After setup, Developer tools → States should show sensors prefixed with the tank/device name. With the default name **My Tank**:
 
-- `sensor.scrumpy_way_tank_percentage_full`
-- `sensor.scrumpy_way_oil_level`
-- `sensor.scrumpy_way_forecast_empty`
-- `sensor.scrumpy_way_last_reading_date`
+- `sensor.my_tank_tank_percentage_full`
+- `sensor.my_tank_oil_level`
+- `sensor.my_tank_forecast_empty`
+- `sensor.my_tank_last_reading_date`
 
 Search for `tank_percentage_full` if the ids differ.
 
@@ -46,7 +46,7 @@ The sensor is `sensor.heating_oil_price_per_litre`. It polls about once a day an
 
 ## Deploy a package update to the live house
 
-The running Home Assistant is at `http://192.168.68.72/` (port 80). Copy through the sidebar **Terminal** add-on.
+The running Home Assistant is at `http://your ip address running HA/` (port 80). Copy through the sidebar **Terminal** add-on.
 
 1. Backup: `cp /config/packages/heating_oil.yaml /config/packages/heating_oil.yaml.bak`
 2. Copy this repo’s `packages/heating_oil.yaml` to `/config/packages/heating_oil.yaml`

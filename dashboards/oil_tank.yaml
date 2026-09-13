@@ -1,11 +1,11 @@
 # Card snippet for the live Heating oil dashboard (UI storage).
 # Overview / Home is also storage mode — do not set lovelace.mode: yaml.
-# Live tank device is Scrumpy Way. Search Developer tools → States for
+# Default tank device name is My Tank. Search Developer tools → States for
 # tank_percentage_full if those ids do not match.
 type: vertical-stack
 cards:
   - type: gauge
-    entity: sensor.scrumpy_way_tank_percentage_full
+    entity: sensor.my_tank_tank_percentage_full
     name: Heating oil
     needle: true
     min: 0
@@ -17,11 +17,11 @@ cards:
   - type: entities
     title: Heating oil
     entities:
-      - entity: sensor.scrumpy_way_oil_level
+      - entity: sensor.my_tank_oil_level
         name: Level
-      - entity: sensor.scrumpy_way_forecast_empty
+      - entity: sensor.my_tank_forecast_empty
         name: Days until empty
-      - entity: sensor.scrumpy_way_last_reading_date
+      - entity: sensor.my_tank_last_reading_date
         name: Last reading
       - entity: sensor.heating_oil_price_per_litre
         name: Price
