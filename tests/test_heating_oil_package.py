@@ -62,6 +62,14 @@ def test_refresh_automation_watches_menu_helpers():
     assert "from_state is not none" in blob
 
 
+def test_run_out_date_sensor_uses_forecast_empty_days():
+    blob = yaml.safe_dump(load_package()["template"], sort_keys=False)
+    assert "heating_oil_run_out_date" in blob
+    assert "_forecast_empty" in blob
+    assert "timedelta" in blob
+    assert "device_class: date" in blob or "date" in blob
+
+
 def test_order_litres_helper_and_cost_sensor():
     package = load_package()
     litres = package["input_number"]["heating_oil_order_litres"]
@@ -78,6 +86,13 @@ def test_order_litres_helper_and_cost_sensor():
 
 def test_oil_tank_dashboard_shows_price_and_url_menu():
     text = OIL_DASH_PATH.read_text(encoding="utf-8")
+    assert text.index("sensor.my_tank_oil_level") < text.index(
+        "sensor.heating_oil_run_out_date"
+    )
+    assert text.index("sensor.heating_oil_run_out_date") < text.index(
+        "sensor.my_tank_forecast_empty"
+    )
+    assert "Run out date" in text
     assert "sensor.heating_oil_price_per_litre" in text
     assert "input_number.heating_oil_order_litres" in text
     assert "sensor.heating_oil_order_cost" in text
@@ -95,3 +110,4 @@ def test_readme_covers_oil_price_scrape():
     assert "heating_oil_price_per_litre" in text
     assert "oil order litres" in text
     assert "order cost" in text
+    assert "run out date" in text

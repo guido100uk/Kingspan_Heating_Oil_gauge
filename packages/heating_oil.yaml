@@ -46,6 +46,27 @@ template:
             states('sensor.heating_oil_price_per_litre') | float(0)
             * states('input_number.heating_oil_order_litres') | float(0)
           ) | round(2) }}
+      - name: Heating oil run out date
+        unique_id: heating_oil_run_out_date
+        device_class: date
+        icon: mdi:calendar-end
+        availability: >-
+          {% set ns = namespace(ok=false) %}
+          {% for s in states.sensor if s.entity_id.endswith('_forecast_empty') %}
+            {% if s.state | float(none) is number %}
+              {% set ns.ok = true %}
+            {% endif %}
+          {% endfor %}
+          {{ ns.ok }}
+        state: >-
+          {% set ns = namespace(days=none) %}
+          {% for s in states.sensor if s.entity_id.endswith('_forecast_empty') %}
+            {% set d = s.state | float(none) %}
+            {% if d is number %}
+              {% set ns.days = d | int %}
+            {% endif %}
+          {% endfor %}
+          {{ (now() + timedelta(days=ns.days)).strftime('%Y-%m-%d') }}
 
 rest:
   - resource_template: >-

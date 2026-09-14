@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### 2026-09-14 15:45 — Run out date on Heating oil
+- Entities card order is Level, **Run out date**, Days until empty.
+- Template sensor `sensor.heating_oil_run_out_date` is today plus the SENSiT `*_forecast_empty` days (YYYY-MM-DD).
+- Live Heating oil page: Level, Run out date, Days until empty. At 522 days remaining the date is 2028-02-18.
+
 ### 2026-09-13 18:55 — Generic My Tank examples, no house IP
 - README and dashboard snippet now use **My Tank** (`sensor.my_tank_*`) as the example device.
 - Docs use `your ip address running HA` instead of a house-specific IP. Did not change the running Home Assistant instance.

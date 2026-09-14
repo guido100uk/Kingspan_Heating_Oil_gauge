@@ -19,6 +19,8 @@ cards:
     entities:
       - entity: sensor.my_tank_oil_level
         name: Level
+      - entity: sensor.heating_oil_run_out_date
+        name: Run out date
       - entity: sensor.my_tank_forecast_empty
         name: Days until empty
       - entity: sensor.my_tank_last_reading_date
