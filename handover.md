@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### 2026-09-14 16:05 — Run out date format
+- **Date format** helper on the Heating oil page: **System default** (locale `%x`) or DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD, D Month YYYY.
+- Run out date is no longer forced to ISO `YYYY-MM-DD`.
+- Live: **Date format** is on the Heating oil card; System default currently shows `02/18/28`. Pick **DD/MM/YYYY** or **D Month YYYY** if you prefer.
+
 ### 2026-09-14 15:45 — Run out date on Heating oil
 - Entities card order is Level, **Run out date**, Days until empty.
 - Template sensor `sensor.heating_oil_run_out_date` is today plus the SENSiT `*_forecast_empty` days (YYYY-MM-DD).

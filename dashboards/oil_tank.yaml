@@ -31,6 +31,8 @@ cards:
         name: Oil order litres
       - entity: sensor.heating_oil_order_cost
         name: Order cost
+      - entity: input_select.heating_oil_date_format
+        name: Date format
   - type: entities
     title: Oil price source
     show_header_toggle: false

@@ -63,11 +63,16 @@ def test_refresh_automation_watches_menu_helpers():
 
 
 def test_run_out_date_sensor_uses_forecast_empty_days():
-    blob = yaml.safe_dump(load_package()["template"], sort_keys=False)
+    package = load_package()
+    fmt = package["input_select"]["heating_oil_date_format"]
+    assert fmt["initial"] == "System default"
+    assert "DD/MM/YYYY" in fmt["options"]
+    blob = yaml.safe_dump(package["template"], sort_keys=False)
     assert "heating_oil_run_out_date" in blob
     assert "_forecast_empty" in blob
     assert "timedelta" in blob
-    assert "device_class: date" in blob or "date" in blob
+    assert "heating_oil_date_format" in blob
+    assert "timestamp_custom" in blob
 
 
 def test_order_litres_helper_and_cost_sensor():
@@ -96,6 +101,8 @@ def test_oil_tank_dashboard_shows_price_and_url_menu():
     assert "sensor.heating_oil_price_per_litre" in text
     assert "input_number.heating_oil_order_litres" in text
     assert "sensor.heating_oil_order_cost" in text
+    assert "input_select.heating_oil_date_format" in text
+    assert "Date format" in text
     assert "input_text.heating_oil_price_url" in text
     assert "input_text.heating_oil_price_selector" in text
     assert "input_boolean.heating_oil_price_is_pence" in text
@@ -111,3 +118,4 @@ def test_readme_covers_oil_price_scrape():
     assert "oil order litres" in text
     assert "order cost" in text
     assert "run out date" in text
+    assert "date format" in text

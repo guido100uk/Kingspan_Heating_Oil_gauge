@@ -31,6 +31,18 @@ input_number:
     initial: 500
     icon: mdi:barrel
 
+input_select:
+  heating_oil_date_format:
+    name: Date format
+    options:
+      - System default
+      - DD/MM/YYYY
+      - MM/DD/YYYY
+      - YYYY-MM-DD
+      - D Month YYYY
+    initial: System default
+    icon: mdi:calendar-clock
+
 template:
   - sensor:
       - name: Heating oil order cost
@@ -48,7 +60,6 @@ template:
           ) | round(2) }}
       - name: Heating oil run out date
         unique_id: heating_oil_run_out_date
-        device_class: date
         icon: mdi:calendar-end
         availability: >-
           {% set ns = namespace(ok=false) %}
@@ -66,7 +77,19 @@ template:
               {% set ns.days = d | int %}
             {% endif %}
           {% endfor %}
-          {{ (now() + timedelta(days=ns.days)).strftime('%Y-%m-%d') }}
+          {% set dt = now() + timedelta(days=ns.days) %}
+          {% set fmt = states('input_select.heating_oil_date_format') %}
+          {% if fmt == 'DD/MM/YYYY' %}
+            {{ dt.strftime('%d/%m/%Y') }}
+          {% elif fmt == 'MM/DD/YYYY' %}
+            {{ dt.strftime('%m/%d/%Y') }}
+          {% elif fmt == 'YYYY-MM-DD' %}
+            {{ dt.strftime('%Y-%m-%d') }}
+          {% elif fmt == 'D Month YYYY' %}
+            {{ dt.day }} {{ dt.strftime('%B %Y') }}
+          {% else %}
+            {{ dt.timestamp() | timestamp_custom('%x', true) }}
+          {% endif %}
 
 rest:
   - resource_template: >-
