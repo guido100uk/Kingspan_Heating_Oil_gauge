@@ -30,7 +30,7 @@ cards:
       - entity: input_number.heating_oil_order_litres
         name: Oil order litres
       - entity: sensor.heating_oil_order_cost
-        name: Order cost
+        name: Order cost (approximate cost)
       - entity: input_select.heating_oil_date_format
         name: Date format
   - type: entities

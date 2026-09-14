@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 2026-09-14 16:17 — Order cost labelled approximate
+- Heating oil row is now **Order cost (approximate cost)**.
+
 ### 2026-09-14 16:05 — Run out date format
 - **Date format** helper on the Heating oil page: **System default** (locale `%x`) or DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD, D Month YYYY.
 - Run out date is no longer forced to ISO `YYYY-MM-DD`.

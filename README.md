@@ -43,7 +43,7 @@ The **Heating oil** page shows **Price** and an **Oil price source** menu:
 
 The sensor is `sensor.heating_oil_price_per_litre`. It polls about once a day and also refreshes when you change the URL, selector, or pence toggle. If the selector does not match, it falls back to the first `NN.NN pence` on the page. Do not put passwords in the URL helper.
 
-**Oil order litres** is a number you type on the Heating oil page (default 500 L, range 1–5000). **Order cost** is that amount times the current price, in GBP, rounded to 2 decimals (`sensor.heating_oil_order_cost`). It updates as soon as you change the litres or a new price is scraped.
+**Oil order litres** is a number you type on the Heating oil page (default 500 L, range 1–5000). **Order cost (approximate cost)** is that amount times the current price, in GBP, rounded to 2 decimals (`sensor.heating_oil_order_cost`). It updates as soon as you change the litres or a new price is scraped.
 
 ## Deploy a package update to the live house
 

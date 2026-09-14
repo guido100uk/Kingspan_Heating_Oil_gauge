@@ -101,6 +101,7 @@ def test_oil_tank_dashboard_shows_price_and_url_menu():
     assert "sensor.heating_oil_price_per_litre" in text
     assert "input_number.heating_oil_order_litres" in text
     assert "sensor.heating_oil_order_cost" in text
+    assert "Order cost (approximate cost)" in text
     assert "input_select.heating_oil_date_format" in text
     assert "Date format" in text
     assert "input_text.heating_oil_price_url" in text
@@ -117,5 +118,6 @@ def test_readme_covers_oil_price_scrape():
     assert "heating_oil_price_per_litre" in text
     assert "oil order litres" in text
     assert "order cost" in text
+    assert "approximate cost" in text
     assert "run out date" in text
     assert "date format" in text
