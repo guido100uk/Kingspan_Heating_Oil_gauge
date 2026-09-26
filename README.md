@@ -18,7 +18,7 @@ After setup, Developer tools → States should show sensors prefixed with the ta
 - `sensor.my_tank_tank_percentage_full`
 - `sensor.my_tank_oil_level`
 - `sensor.my_tank_forecast_empty`
-- `sensor.heating_oil_run_out_date` (today plus forecast empty days)
+- `sensor.heating_oil_run_out_date` (last reading plus forecast empty days)
 - `sensor.my_tank_last_reading_date`
 
 Search for `tank_percentage_full` if the ids differ.
@@ -31,7 +31,7 @@ Search for `tank_percentage_full` if the ids differ.
 
 The live house Overview is the built-in **Home** dashboard (UI storage). Home does not accept a raw Lovelace gauge card; pin the tank sensors as **Favorites** instead (**Edit overview** → **Add favorite**).
 
-The needle gauge plus litres, **Run out date**, days, last reading, and current £ per litre lives on the sidebar **Heating oil** dashboard. **Run out date** (`sensor.heating_oil_run_out_date`) is today plus the SENSiT forecast-empty days. **Date format** (default **System default**) uses the Home Assistant locale date, or pick **DD/MM/YYYY**, **MM/DD/YYYY**, **YYYY-MM-DD**, or **D Month YYYY**. Severity is red below 25%, yellow 25–35%, green at 35% and above. Tank values only change when Kingspan has a new cloud reading (the integration polls about every 8 hours).
+The needle gauge plus litres, **Run out date**, days, last reading, and current £ per litre lives on the sidebar **Heating oil** dashboard. **Run out date** (`sensor.heating_oil_run_out_date`) is the tank **Last reading** timestamp plus the SENSiT forecast-empty days, not the Home Assistant clock. If the tank sensors are missing it stays unavailable instead of showing today. **Date format** (default **System default**) uses the Home Assistant locale date, or pick **DD/MM/YYYY**, **MM/DD/YYYY**, **YYYY-MM-DD**, or **D Month YYYY**. Severity is red below 25%, yellow 25–35%, green at 35% and above. Tank values only change when Kingspan has a new cloud reading (the integration polls about every 8 hours).
 
 ## Current oil price
 

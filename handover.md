@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### 2026-09-26 17:25 — Run out date uses tank last reading
+- Run out date is last reading + forecast-empty days. It no longer uses the Home Assistant clock, so a missing forecast cannot show today's computer date.
+- Unavailable until both the SENSiT last-reading timestamp and forecast days exist.
+- Key files: `packages/heating_oil.yaml`, `README.md`, `tests/test_heating_oil_package.py`.
+
 ### 2026-09-14 16:17 — Order cost labelled approximate
 - Heating oil row is now **Order cost (approximate cost)**.
 

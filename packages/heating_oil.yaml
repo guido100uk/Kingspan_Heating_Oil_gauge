@@ -58,27 +58,56 @@ template:
             states('sensor.heating_oil_price_per_litre') | float(0)
             * states('input_number.heating_oil_order_litres') | float(0)
           ) | round(2) }}
+  - trigger:
+      - trigger: homeassistant
+        event: start
+      - trigger: time_pattern
+        minutes: "/5"
+      - trigger: state
+        entity_id: input_select.heating_oil_date_format
+      - trigger: template
+        value_template: >-
+          {% set ns = namespace(v='') %}
+          {% for s in states.sensor
+             if s.entity_id.endswith('_forecast_empty')
+             or s.entity_id.endswith('_last_reading_date') %}
+            {% set ns.v = ns.v ~ s.state %}
+          {% endfor %}
+          {{ ns.v }}
+    sensor:
       - name: Heating oil run out date
         unique_id: heating_oil_run_out_date
         icon: mdi:calendar-end
         availability: >-
-          {% set ns = namespace(ok=false) %}
-          {% for s in states.sensor if s.entity_id.endswith('_forecast_empty') %}
-            {% if s.state | float(none) is number %}
-              {% set ns.ok = true %}
-            {% endif %}
-          {% endfor %}
-          {{ ns.ok }}
-        state: >-
-          {% set ns = namespace(days=none) %}
+          {% set ns = namespace(days=none, base=none) %}
           {% for s in states.sensor if s.entity_id.endswith('_forecast_empty') %}
             {% set d = s.state | float(none) %}
             {% if d is number %}
               {% set ns.days = d | int %}
+              {% set last_id = 'sensor.' ~ (
+                s.object_id | replace('_forecast_empty', '_last_reading_date')
+              ) %}
+              {% set ns.base = states(last_id) | as_datetime %}
             {% endif %}
           {% endfor %}
-          {% set dt = now() + timedelta(days=ns.days) %}
+          {{ ns.days is number and ns.base is not none }}
+        state: >-
+          {% set ns = namespace(days=none, base=none) %}
+          {% for s in states.sensor if s.entity_id.endswith('_forecast_empty') %}
+            {% set d = s.state | float(none) %}
+            {% if d is number %}
+              {% set ns.days = d | int %}
+              {% set last_id = 'sensor.' ~ (
+                s.object_id | replace('_forecast_empty', '_last_reading_date')
+              ) %}
+              {% set ns.base = states(last_id) | as_datetime %}
+            {% endif %}
+          {% endfor %}
+          {% set dt = ns.base + timedelta(days=ns.days) %}
           {% set fmt = states('input_select.heating_oil_date_format') %}
+          {% if fmt in ['unknown', 'unavailable', ''] %}
+            {% set fmt = 'DD/MM/YYYY' %}
+          {% endif %}
           {% if fmt == 'DD/MM/YYYY' %}
             {{ dt.strftime('%d/%m/%Y') }}
           {% elif fmt == 'MM/DD/YYYY' %}

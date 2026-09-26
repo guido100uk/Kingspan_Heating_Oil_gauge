@@ -70,9 +70,12 @@ def test_run_out_date_sensor_uses_forecast_empty_days():
     blob = yaml.safe_dump(package["template"], sort_keys=False)
     assert "heating_oil_run_out_date" in blob
     assert "_forecast_empty" in blob
+    assert "_last_reading_date" in blob
+    assert "as_datetime" in blob
     assert "timedelta" in blob
     assert "heating_oil_date_format" in blob
-    assert "timestamp_custom" in blob
+    assert "now() + timedelta" not in blob
+    assert "ns.days is number and ns.base is not none" in blob
 
 
 def test_order_litres_helper_and_cost_sensor():
