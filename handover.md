@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 2026-09-26 19:38 — README coffee button as PNG
+- GitHub does not render the Buy me a coffee `button-api` SVG in README files. Switched to the official yellow PNG so the button shows.
+
 ### 2026-09-26 19:30 — README Buy me a coffee
 - Added the Buy me a coffee button at the bottom of `README.md`.
 
