@@ -2,6 +2,18 @@
 
 ## Changelog
 
+### 2026-09-26 19:22 — Date format keeps DD/MM/YYYY
+- Removed YAML `initial: System default` on Date format. That value was applied on every Core restart, which wiped DD/MM/YYYY.
+- First option is now DD/MM/YYYY. Live helper set back to DD/MM/YYYY so Run out date shows `29/05/2027`.
+- After Core restart the format stayed DD/MM/YYYY. README screenshot updated to match.
+
+### 2026-09-26 19:20 — README Heating oil screenshot
+- Added `docs/heating-oil.png` (live Heating oil dashboard) at the top of `README.md`.
+
+### 2026-09-26 17:37 — Live run-out date uses last reading
+- Deployed last-reading run-out package to live HA (`ha core check` then restart).
+- After restart: last reading `2026-09-26T14:36:51+00:00` + 245 days = **29/05/2027**. Date format restored to DD/MM/YYYY (restart had shown System default `05/29/27`).
+
 ### 2026-09-26 17:25 — Run out date uses tank last reading
 - Run out date is last reading + forecast-empty days. It no longer uses the Home Assistant clock, so a missing forecast cannot show today's computer date.
 - Unavailable until both the SENSiT last-reading timestamp and forecast days exist.

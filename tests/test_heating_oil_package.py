@@ -65,8 +65,9 @@ def test_refresh_automation_watches_menu_helpers():
 def test_run_out_date_sensor_uses_forecast_empty_days():
     package = load_package()
     fmt = package["input_select"]["heating_oil_date_format"]
-    assert fmt["initial"] == "System default"
-    assert "DD/MM/YYYY" in fmt["options"]
+    assert "initial" not in fmt
+    assert fmt["options"][0] == "DD/MM/YYYY"
+    assert "System default" in fmt["options"]
     blob = yaml.safe_dump(package["template"], sort_keys=False)
     assert "heating_oil_run_out_date" in blob
     assert "_forecast_empty" in blob
@@ -124,3 +125,5 @@ def test_readme_covers_oil_price_scrape():
     assert "approximate cost" in text
     assert "run out date" in text
     assert "date format" in text
+    assert "docs/heating-oil.png" in text
+    assert (ROOT / "docs" / "heating-oil.png").is_file()

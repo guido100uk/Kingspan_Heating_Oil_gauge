@@ -6,6 +6,8 @@ This repo is YAML helpers, a REST scrape, and a Lovelace card snippet. Tank read
 
 Presence simulator lives in a separate repo: [presence_simulator](https://github.com/guido100uk/presence_simulator). The older combined tree is archived at [home_assistant](https://github.com/guido100uk/home_assistant).
 
+![Heating oil dashboard](docs/heating-oil.png)
+
 ## Install
 
 1. If **HACS** is already on the house: HACS → search **Watchman SENSiT** → Download → restart Core if asked.
@@ -31,7 +33,7 @@ Search for `tank_percentage_full` if the ids differ.
 
 The live house Overview is the built-in **Home** dashboard (UI storage). Home does not accept a raw Lovelace gauge card; pin the tank sensors as **Favorites** instead (**Edit overview** → **Add favorite**).
 
-The needle gauge plus litres, **Run out date**, days, last reading, and current £ per litre lives on the sidebar **Heating oil** dashboard. **Run out date** (`sensor.heating_oil_run_out_date`) is the tank **Last reading** timestamp plus the SENSiT forecast-empty days, not the Home Assistant clock. If the tank sensors are missing it stays unavailable instead of showing today. **Date format** (default **System default**) uses the Home Assistant locale date, or pick **DD/MM/YYYY**, **MM/DD/YYYY**, **YYYY-MM-DD**, or **D Month YYYY**. Severity is red below 25%, yellow 25–35%, green at 35% and above. Tank values only change when Kingspan has a new cloud reading (the integration polls about every 8 hours).
+The needle gauge plus litres, **Run out date**, days, last reading, and current £ per litre lives on the sidebar **Heating oil** dashboard. **Run out date** (`sensor.heating_oil_run_out_date`) is the tank **Last reading** timestamp plus the SENSiT forecast-empty days, not the Home Assistant clock. If the tank sensors are missing it stays unavailable instead of showing today. **Date format** defaults to **DD/MM/YYYY** and keeps the last choice across restarts. **System default** uses the Home Assistant locale date; the other options are **MM/DD/YYYY**, **YYYY-MM-DD**, and **D Month YYYY**. Severity is red below 25%, yellow 25–35%, green at 35% and above. Tank values only change when Kingspan has a new cloud reading (the integration polls about every 8 hours).
 
 ## Current oil price
 
@@ -63,4 +65,5 @@ This GitHub repo is private, so `raw.githubusercontent.com` will 404 without aut
 | --- | --- |
 | `packages/heating_oil.yaml` | Price URL/selector helpers, litres box, REST price, order-cost template |
 | `dashboards/oil_tank.yaml` | Card snippet for the live Heating oil dashboard |
+| `docs/heating-oil.png` | Screenshot of the Heating oil dashboard |
 | `tests/test_heating_oil_package.py` | Package and README checks |

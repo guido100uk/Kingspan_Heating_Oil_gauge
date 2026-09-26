@@ -35,12 +35,11 @@ input_select:
   heating_oil_date_format:
     name: Date format
     options:
-      - System default
       - DD/MM/YYYY
       - MM/DD/YYYY
       - YYYY-MM-DD
       - D Month YYYY
-    initial: System default
+      - System default
     icon: mdi:calendar-clock
 
 template:
