@@ -67,3 +67,5 @@ This GitHub repo is private, so `raw.githubusercontent.com` will 404 without aut
 | `dashboards/oil_tank.yaml` | Card snippet for the live Heating oil dashboard |
 | `docs/heating-oil.png` | Screenshot of the Heating oil dashboard |
 | `tests/test_heating_oil_package.py` | Package and README checks |
+
+<a href="https://www.buymeacoffee.com/guido_guido"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=guido_guido&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>

@@ -2,6 +2,9 @@
 
 ## Changelog
 
+### 2026-09-26 19:30 — README Buy me a coffee
+- Added the Buy me a coffee button at the bottom of `README.md`.
+
 ### 2026-09-26 19:22 — Date format keeps DD/MM/YYYY
 - Removed YAML `initial: System default` on Date format. That value was applied on every Core restart, which wiped DD/MM/YYYY.
 - First option is now DD/MM/YYYY. Live helper set back to DD/MM/YYYY so Run out date shows `29/05/2027`.
