@@ -55,7 +55,7 @@ The running Home Assistant is at `http://your ip address running HA/` (port 80).
 2. Copy this repo’s `packages/heating_oil.yaml` to `/config/packages/heating_oil.yaml`
 3. `ha core check`
 4. `ha core restart`
-5. Commit and push the same change to GitHub
+
 
 
 
