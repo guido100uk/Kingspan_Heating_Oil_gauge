@@ -4,7 +4,7 @@ Watchman SENSiT tank level on a Home Assistant **Heating oil** dashboard, plus a
 
 This repo is YAML helpers, a REST scrape, and a Lovelace card snippet. Tank readings come from the existing [Kingspan Watchman SENSiT](https://github.com/masaccio/ha-kingspan-watchman-sensit) integration. Username and password are entered in **Settings → Devices & services**. Do **not** put Kingspan passwords in YAML or `secrets.yaml`.
 
-Presence simulator lives in a separate repo: [presence_simulator](https://github.com/guido100uk/presence_simulator). The older combined tree is archived at [home_assistant](https://github.com/guido100uk/home_assistant).
+
 
 ![Heating oil dashboard](docs/heating-oil.png)
 
