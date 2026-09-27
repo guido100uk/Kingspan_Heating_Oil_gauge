@@ -57,7 +57,7 @@ The running Home Assistant is at `http://your ip address running HA/` (port 80).
 4. `ha core restart`
 5. Commit and push the same change to GitHub
 
-This GitHub repo is private, so `raw.githubusercontent.com` will 404 without auth. Copy files from a clone, not from a raw URL.
+
 
 ## Files
 
